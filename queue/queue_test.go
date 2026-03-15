@@ -13,7 +13,7 @@ func TestNew(t *testing.T) {
 		t.Error("Expected empty queue")
 	}
 
-	q2 := New(1, 2, 3)
+	q2 := New[int](1, 2, 3)
 	if q2.Len() != 3 {
 		t.Errorf("Expected queue length 3, got %d", q2.Len())
 	}
@@ -101,7 +101,7 @@ func TestBack(t *testing.T) {
 		t.Errorf("Expected back to be 'third', got %s", back)
 	}
 
-	q.Dequeue() // remove "first"
+	q.Dequeue()
 	back = q.Back()
 	if back != "third" {
 		t.Errorf("Expected back to still be 'third', got %s", back)
@@ -163,21 +163,18 @@ func TestClear(t *testing.T) {
 
 func TestResize(t *testing.T) {
 	q := New[int]()
-
-	// 填满初始容量直到触发resize
+	
 	initialCap := q.capacity
 	for i := 0; i < initialCap; i++ {
 		q.Enqueue(i)
 	}
-
-	// 再添加一个元素，应该触发扩容
+	
 	q.Enqueue(initialCap)
-
+	
 	if q.capacity <= initialCap {
 		t.Errorf("Expected capacity > %d after resize, got %d", initialCap, q.capacity)
 	}
-
-	// 验证所有元素仍然可以正确取出
+	
 	for i := 0; i <= initialCap; i++ {
 		item := q.Dequeue()
 		if item != i {
@@ -188,26 +185,22 @@ func TestResize(t *testing.T) {
 
 func TestCircularBuffer(t *testing.T) {
 	q := New[int]()
-
-	// 添加一些元素
+	
 	for i := 0; i < 5; i++ {
 		q.Enqueue(i)
 	}
-
-	// 移除一些元素，使头部向前移动
+	
 	for i := 0; i < 3; i++ {
 		item := q.Dequeue()
 		if item != i {
 			t.Errorf("Expected to dequeue %d, got %d", i, item)
 		}
 	}
-
-	// 再添加一些元素，这会使得尾部环绕到数组前面
+	
 	for i := 5; i < 10; i++ {
 		q.Enqueue(i)
 	}
-
-	// 现在队列中的元素应该是 [3, 4, 5, 6, 7, 8, 9]
+	
 	expected := []int{3, 4, 5, 6, 7, 8, 9}
 	for i, exp := range expected {
 		item := q.Dequeue()

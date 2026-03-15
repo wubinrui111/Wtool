@@ -1,12 +1,11 @@
-package stack_test
+package stack
 
 import (
 	"testing"
-	"wtool/stack"
 )
 
 func TestStack(t *testing.T) {
-	stack := stack.New[int]()
+	stack := New[int]()
 	stack.Push(1)
 	stack.Push(2)
 	stack.Push(3)
@@ -31,7 +30,7 @@ func TestStack(t *testing.T) {
 }
 
 func TestStackAllNew(t *testing.T) {
-	stack := stack.New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+	stack := New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
 
 	if stack.Len() != 10 {
 		t.Errorf("stack length is not 10")
