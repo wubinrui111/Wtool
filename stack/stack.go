@@ -47,3 +47,8 @@ func (s *Stack[T]) Len() int {
 func (s *Stack[T]) Empty() bool {
 	return s.top == 0
 }
+
+func (s *Stack[T]) Clear() {
+	clear(s.data)
+	s.top = 0
+}

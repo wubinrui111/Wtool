@@ -8,12 +8,12 @@ func TestNew(t *testing.T) {
 		t.Errorf("Expected empty set, got length %d", s.Len())
 	}
 
-	s2 := New(1, 2, 3)
+	s2 := New[int](1, 2, 3)
 	if s2.Len() != 3 {
 		t.Errorf("Expected set length 3, got %d", s2.Len())
 	}
 
-	s3 := New(1, 1, 2, 2, 3)
+	s3 := New[int](1, 1, 2, 2, 3)
 	if s3.Len() != 3 {
 		t.Errorf("Expected set length 3 (unique elements only), got %d", s3.Len())
 	}
@@ -151,12 +151,12 @@ func TestItems(t *testing.T) {
 }
 
 func TestGenericTypes(t *testing.T) {
-	strSet := New("hello", "world", "hello")
+	strSet := New[string]("hello", "world", "hello")
 	if strSet.Len() != 2 {
 		t.Errorf("String set expected length 2, got %d", strSet.Len())
 	}
 
-	boolSet := New(true, false, true)
+	boolSet := New[bool](true, false, true)
 	if boolSet.Len() != 2 {
 		t.Errorf("Bool set expected length 2, got %d", boolSet.Len())
 	}
@@ -170,7 +170,7 @@ func TestGenericTypes(t *testing.T) {
 	p2 := Person{Name: "Bob", Age: 25}
 	p3 := Person{Name: "Alice", Age: 30}
 
-	personSet := New(p1, p2, p3)
+	personSet := New[Person](p1, p2, p3)
 	if personSet.Len() != 2 {
 		t.Errorf("Person set expected length 2, got %d", personSet.Len())
 	}
