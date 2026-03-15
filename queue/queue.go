@@ -9,7 +9,7 @@ type Queue[T any] struct {
 }
 
 func New[T any](items ...T) *Queue[T] {
-	if items != nil {
+	if len(items) > 0 {
 		q := &Queue[T]{
 			data:     make([]T, len(items)*2),
 			head:     0,
@@ -32,11 +32,11 @@ func New[T any](items ...T) *Queue[T] {
 
 func (q *Queue[T]) resize() {
 	newData := make([]T, q.capacity*2)
-	
+
 	for i := 0; i < q.count; i++ {
 		newData[i] = q.data[(q.head+i)%q.capacity]
 	}
-	
+
 	q.data = newData
 	q.head = 0
 	q.tail = q.count
@@ -56,11 +56,11 @@ func (q *Queue[T]) Dequeue() T {
 	if q.Empty() {
 		panic("queue is empty")
 	}
-	
+
 	item := q.data[q.head]
 	q.head = (q.head + 1) % q.capacity
 	q.count--
-	
+
 	return item
 }
 

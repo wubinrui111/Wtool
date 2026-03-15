@@ -6,7 +6,7 @@ type Stack[T any] struct {
 }
 
 func New[T any](n ...T) *Stack[T] {
-	if n != nil {
+	if len(n) > 0 {
 		return &Stack[T]{
 			data: n,
 			top:  len(n),
