@@ -29,3 +29,19 @@ func TestStack(t *testing.T) {
 		}
 	}
 }
+
+func TestStackAllNew(t *testing.T) {
+	stack := stack.New(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+	if stack.Len() != 10 {
+		t.Errorf("stack length is not 10")
+	}
+	for i := 10; i > 0; i-- {
+		if stack.Len() != i {
+			t.Errorf("stack length is not %d", i)
+		}
+		if stack.Pop() != i {
+			t.Errorf("stack pop is not %d", i)
+		}
+	}
+}
